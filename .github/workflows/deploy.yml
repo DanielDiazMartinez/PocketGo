@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: Actualizar y compilar
         run: |
-          cd ~/services/gastos-app
+          cd ~/services/PocketGo
           git checkout prod
           git pull origin prod
           docker compose up -d --build
