@@ -1,0 +1,17 @@
+name: Continuous Deployment
+
+on:
+  push:
+    branches:
+      - prod
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    steps:
+      - name: Actualizar y compilar
+        run: |
+          cd ~/services/gastos-app
+          git checkout prod
+          git pull origin prod
+          docker compose up -d --build

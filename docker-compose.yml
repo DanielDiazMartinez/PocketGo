@@ -1,0 +1,21 @@
+services:
+  app-api:
+    build: .
+    container_name: gastos_api
+    restart: unless-stopped
+    networks:
+      - proxy-net
+    environment:
+      - PORT=8080
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=proxy-net"
+      - "traefik.http.routers.gastos-api.entrypoints=web"
+      - "traefik.http.routers.gastos-api.rule=PathPrefix(`/api`)"
+      - "traefik.http.middlewares.gastos-strip.stripprefix.prefixes=/api"
+      - "traefik.http.routers.gastos-api.middlewares=gastos-strip"
+      - "traefik.http.services.gastos-api.loadbalancer.server.port=8080"
+
+networks:
+  proxy-net:
+    external: true
